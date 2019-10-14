@@ -1,0 +1,31 @@
+ .navbar { background: #0483c1; margin-bottom: 0px; border: none; padding: 0.5rem 1rem; }
+.navbar-default .navbar-nav>li>a { color: #fff; }
+.breadcrumb { padding: 10px 15px; margin-bottom: 10px; margin: 20px; list-style: none; background-color: #0483c1; border-radius: 4px; }
+ol.breadcrumb li a { color: #fff; text-decoration: none; }
+ul li{ list-style: none;}
+
+.explore { padding: 2em 0; background: #fff; }
+.explore a:hover, a:focus { outline: none; text-decoration: none; }
+.explore .p_7 { padding: 7px;}
+.explore .m_t { margin-top: 20px; }
+.explore .tab .nav-tabs { border-bottom: none; position: relative; }
+.explore .tab .nav-tabs li { margin-right: 60px; z-index: 1; }
+.explore .tab .nav-tabs li:after { content: ""; width: 100%; border: 1px solid #ccc6c6; position: absolute; top: 50%; right: -60%; z-index: -1; }
+.explore .tab .nav-tabs li:last-child:after { border: none; }
+.explore .tab .nav-tabs li a { display: block; padding: 3px 20px;height: 30px; background: #fff; font-size: 15px; font-weight: 600; color: #000; text-transform: uppercase; border-radius: 0; margin-right: 0; border: 2px solid #0483c1; position: relative; overflow: hidden; z-index: 1; transition: all 0.3s ease 0s; }
+.explore .tab .nav-tabs li.active a, .tab .nav-tabs li a:hover { color: #fff; border: 2px solid #5bc0de; }
+.explore .tab .nav-tabs li a:after { content: ""; display: block; width: 100%; height: 0; position: absolute; top: 0; left: 0; z-index: -1; transition: all 0.3s ease 0s; }
+.explore .tab .nav-tabs li.active a:after, .tab .nav-tabs li a:hover:after { height: 100%; background: #5bc0de; }
+.explore .tab .tab-content { padding: 20px 10px; margin-top: 0; font-size: 14px; color: #000; line-height: 26px; }
+.explore .tab .tab-content h3 { font-size: 24px; margin-top: 0; }
+.explore #explore-table .dataTables_wrapper{ position: relative; clear: both; zoom: 1; overflow-x: auto;}
+.explore #explore-table th, #explore-table td { white-space: nowrap;word-break:break-all; } 
+@media only screen and (max-width: 767px) {
+    .explore .tab .nav-tabs li { margin: 0 25px 0 0; }
+}
+
+@media only screen and (max-width: 479px) {
+    .explore .tab .nav-tabs li { width: 100%; text-align: center; margin: 0 0 10px 0; }
+    .explore .tab .nav-tabs li:after { width: 0; height: 100%; top: auto; bottom: -60%; right: 50%; }
+}
+
