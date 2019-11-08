@@ -91,7 +91,7 @@ public class ExploreEntryUtil {
         if(ExcelUtil.OFFICE_EXCEL_XLS.equals(ExcelUtil.getSuffiex(file)) || ExcelUtil.OFFICE_EXCEL_XLSX.equals(ExcelUtil.getSuffiex(file))){
             try {
                 // 获取 excel 格式的文件，进行输出
-                result = ExcelUtil.readExcel(is, sheetNo);
+                result = ExcelUtil.readExcel(is, sheetNo, file);
             } catch (IOException ex) {
                 Logger.getLogger(ExploreServlet.class.getName()).log(Level.SEVERE, null, ex);
             }

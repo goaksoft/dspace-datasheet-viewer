@@ -11,10 +11,12 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * @author  coke
@@ -32,17 +34,23 @@ public class ExcelUtil {
      * @return HSSFWorkbook 对象
      * @throws IOException 文件异常
      */
-    public static HSSFWorkbook getWorkbook(InputStream is) throws IOException{
-        HSSFWorkbook wb = new HSSFWorkbook(is);
+    public static Workbook getWorkbook(InputStream is, String fileName) throws IOException{
+        Workbook wb = null;
         
-        // 判断关闭文件流
+        if (OFFICE_EXCEL_XLS.equals(getSuffiex(fileName))) {
+            wb = new HSSFWorkbook(is);
+	} else if (OFFICE_EXCEL_XLSX.equals(getSuffiex(fileName))) {
+            wb = new XSSFWorkbook(is);
+	} else {
+            wb = null;
+	}
+        
         if (is != null) {
             is.close();
         }
         
-        // 判断关闭Workbook对象
         if (wb != null) {
-            wb.close();
+             wb.close();
         }
         return wb;
     }
@@ -54,14 +62,14 @@ public class ExcelUtil {
      * @return HSSFSheet表
      * @throws IOException 文件异常
      */
-    public static HSSFSheet getSheet(InputStream is, Integer sheetNo) throws IOException{
+    public static Sheet getSheet(InputStream is, Integer sheetNo, String name) throws IOException{
         // 打开指定位置的Excel文件
-        HSSFWorkbook workbook = getWorkbook(is);
+        Workbook workbook = getWorkbook(is, name);
         if (workbook != null) {
             sheetName = new ArrayList<String>();
             // 打开Excel中的第sheetNo个Sheet
-            HSSFSheet sheet = workbook.getSheetAt(sheetNo);
-                
+            Sheet sheet = workbook.getSheetAt(sheetNo);
+            
             if(sheet.getLastRowNum() == 0 && sheet.getFirstRowNum() == 0){
                 return null;
             }
@@ -70,8 +78,7 @@ public class ExcelUtil {
             if(numberOfSheets > 1){
                 for (int i = 0; i < numberOfSheets; i++) {
                     // 打开Excel中的Sheet
-                    HSSFSheet sn = workbook.getSheetAt(i);
-                    
+                    Sheet sn = workbook.getSheetAt(i);
                     if(sn.getLastRowNum() != 0 || sn.getFirstRowNum() != 0){
                         sheetName.add(sn.getSheetName());
                     }
@@ -87,7 +94,7 @@ public class ExcelUtil {
      * @param hssfRow
      * @return 
      */
-    private static int CheckRowNull(HSSFRow hssfRow){
+    private static int CheckRowNull(Row hssfRow){
         int num = 0;
         Iterator<Cell> cellItr = hssfRow.iterator();
         // 循环判断
@@ -107,11 +114,11 @@ public class ExcelUtil {
      * @return  集合
      * @throws IOException 文件异常
      */
-    public static List<List<String>> readExcel(InputStream is, Integer sheetNo) throws IOException{
+    public static List<List<String>> readExcel(InputStream is, Integer sheetNo, String name) throws IOException{
         List<List<String>> list = new ArrayList<List<String>>();
 
         // 读取 Sheet
-        HSSFSheet sheet = getSheet(is, sheetNo);
+        Sheet sheet = getSheet(is, sheetNo, name);
         
         // 判断Sheet是否为空
         if(sheet == null){
@@ -125,7 +132,7 @@ public class ExcelUtil {
 
         for (int i = 0; i <= rowTotalCount; i++) {
             // 获取第i列的row对象
-            HSSFRow row = sheet.getRow(i);
+            Row row = sheet.getRow(i);
             
             // 判断行为空
             int num = CheckRowNull(row);
@@ -305,4 +312,3 @@ public class ExcelUtil {
     }
 
 }
-
